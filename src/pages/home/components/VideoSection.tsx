@@ -16,11 +16,16 @@ export default function VideoSection() {
   const btnRef = useRef<HTMLAnchorElement>(null);
   const videoWrapRef = useRef<HTMLDivElement>(null);
 
+  // Hide elements immediately on mount
+  useLayoutEffect(() => {
+    gsap.set([titleRef.current, bodyRef.current, btnRef.current], { opacity: 0, x: -50 });
+    gsap.set(videoWrapRef.current, { opacity: 0, x: 70, scale: 0.96 });
+  }, []);
+
   useLayoutEffect(() => {
     if (!ready) return;
     const ctx = gsap.context(() => {
       // Text block: slides from left
-      gsap.set([titleRef.current, bodyRef.current, btnRef.current], { opacity: 0, x: -50 });
       gsap.to([titleRef.current, bodyRef.current, btnRef.current], {
         opacity: 1,
         x: 0,
@@ -35,7 +40,6 @@ export default function VideoSection() {
       });
 
       // Video container: scale up + slide from right
-      gsap.set(videoWrapRef.current, { opacity: 0, x: 70, scale: 0.96 });
       gsap.to(videoWrapRef.current, {
         opacity: 1,
         x: 0,

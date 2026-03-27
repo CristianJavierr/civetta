@@ -53,7 +53,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       // 2) Outline se dibuja
       .to(
         pathOutline,
-        { strokeDashoffset: 0, duration: 7.6, ease: "power2.out" },
+        { strokeDashoffset: 0, duration: 2.8, ease: "power2.out" },
         "+=0.05"
       )
 
@@ -62,7 +62,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         counter,
         {
           val: 100,
-          duration: 7.6,
+          duration: 2.8,
           ease: "power2.out",
           onStart: () => gsap.set(percentRef.current, { opacity: 1 }),
           onUpdate: () => {
@@ -78,7 +78,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       .to(
         taglineRef.current,
         { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
-        "-=4.5"
+        "-=1.8"
       )
 
       // 4) Fill aparece al terminar el outline

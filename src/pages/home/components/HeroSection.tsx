@@ -18,23 +18,18 @@ export default function HeroSection() {
   const badgeRef = useRef<HTMLDivElement>(null);
   const scrollHintRef = useRef<HTMLAnchorElement>(null);
 
+  // Set initial hidden states immediately so elements are hidden behind loading screen
+  useLayoutEffect(() => {
+    gsap.set([word1Ref.current, word2Ref.current], { clipPath: 'inset(0 0 100% 0)', y: 60 });
+    gsap.set([subtitlesRef.current, descRef.current, badgeRef.current], { opacity: 0, y: 24 });
+    gsap.set(scrollHintRef.current, { opacity: 0 });
+  }, []);
+
+  // Run animations only after loading screen completes
   useLayoutEffect(() => {
     if (!ready) return;
     const ctx = gsap.context(() => {
-      // ── PAGE LOAD ENTRANCE ──
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-      // Words clip-path reveal from bottom
-      gsap.set([word1Ref.current, word2Ref.current], {
-        clipPath: 'inset(0 0 100% 0)',
-        y: 60,
-      });
-      gsap.set([subtitlesRef.current, descRef.current, badgeRef.current], {
-        opacity: 0,
-        y: 24,
-      });
-      gsap.set(scrollHintRef.current, { opacity: 0 });
-
       tl.to(word1Ref.current, { clipPath: 'inset(0 0 0% 0)', y: 0, duration: 1.1 }, 0.3)
         .to(word2Ref.current, { clipPath: 'inset(0 0 0% 0)', y: 0, duration: 1.1 }, 0.5)
         .to(subtitlesRef.current, { opacity: 1, y: 0, duration: 0.8 }, 0.9)
@@ -42,7 +37,6 @@ export default function HeroSection() {
         .to(badgeRef.current, { opacity: 1, y: 0, duration: 0.8 }, 1.3)
         .to(scrollHintRef.current, { opacity: 1, duration: 0.6 }, 1.6);
 
-      // ── SCROLL PARALLAX: BG zoom out as you scroll ──
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: 'top top',
@@ -50,10 +44,7 @@ export default function HeroSection() {
         scrub: 1.5,
         onUpdate: (self) => {
           const p = self.progress;
-          gsap.set(bgRef.current, {
-            scale: 1 + p * 0.18,
-            y: p * 60,
-          });
+          gsap.set(bgRef.current, { scale: 1 + p * 0.18, y: p * 60 });
         },
       });
     }, sectionRef);
