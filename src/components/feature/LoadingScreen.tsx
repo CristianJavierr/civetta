@@ -118,7 +118,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#f2ece0]"
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#424135]"
     >
       <div className="flex flex-col items-center gap-7">
         <svg
@@ -134,7 +134,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             ref={pathOutlineRef}
             d={SVG_PATH}
             fill="none"
-            stroke="#1a1916"
+            stroke="#dfd3be"
             strokeWidth="8"
             strokeLinejoin="round"
             strokeLinecap="round"
@@ -142,7 +142,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           <path
             ref={pathFillRef}
             d={SVG_PATH}
-            fill="#1a1916"
+            fill="#dfd3be"
             stroke="none"
           />
         </svg>
@@ -151,14 +151,14 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           <p
             ref={taglineRef}
             className="font-serif text-lg tracking-[0.25em] uppercase font-light"
-            style={{ color: "#1a1916", opacity: 0.45 }}
+            style={{ color: "#dfd3be", opacity: 0.7 }}
           >
             Civetta
           </p>
           <span
             ref={percentRef}
             className="text-[13px] font-semibold tabular-nums"
-            style={{ color: "#1a1916", opacity: 0.6 }}
+            style={{ color: "#dfd3be", opacity: 0.5 }}
           >
             0%
           </span>
@@ -168,7 +168,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       {/* Panel 1 — charcoal, sube primero */}
       <div
         ref={panel1Ref}
-        className="fixed inset-0 z-[10000] bg-[#1a1916]"
+        className="fixed inset-0 z-[10000] bg-[#424135]"
         style={{ willChange: "transform" }}
       />
 

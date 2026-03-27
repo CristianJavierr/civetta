@@ -136,7 +136,7 @@ export default function DrinksSection() {
 
         {/* Right: Cocktail images */}
         <div ref={imgColRef} className="relative lg:w-1/2 flex flex-col sm:flex-row lg:flex-col gap-2 min-h-[500px] will-change-transform">
-          <AnimatedFrame inset={16} color="rgba(26,25,22,0.12)" />
+          <AnimatedFrame inset={16} color="rgba(66,65,53,0.12)" />
 
           <div ref={img1WrapRef} className="flex-1 overflow-hidden" style={{ minHeight: '280px' }}>
             <img

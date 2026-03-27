@@ -11,9 +11,10 @@ export default {
         sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
       },
       colors: {
+        black: '#434438',
         cream: '#f2ece0',
         'cream-light': '#f7f3eb',
-        charcoal: '#1a1916',
+        charcoal: '#424135',
         gold: '#c49060',
         'warm-beige': '#ede5d8',
       },

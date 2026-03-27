@@ -150,7 +150,7 @@ export default function FeaturedMenuSection() {
           </div>
           {/* Food image */}
           <div ref={imageWrapRef} className="relative flex-1 min-h-[350px] overflow-hidden">
-            <AnimatedFrame inset={14} color="rgba(26,25,22,0.15)" />
+            <AnimatedFrame inset={14} color="rgba(66,65,53,0.15)" />
             <img
               ref={imageRef}
               src={FEATURED_IMG}

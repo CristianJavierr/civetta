@@ -76,7 +76,7 @@ export default function GiftCardSection() {
 
         {/* Bordered box */}
         <div ref={boxRef} className="relative border border-charcoal/15 p-10 md:p-14 will-change-transform">
-          <AnimatedFrame inset={8} color="rgba(26,25,22,0.10)" />
+          <AnimatedFrame inset={8} color="rgba(66,65,53,0.10)" />
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-10">
             <div className="flex flex-col gap-4">
               <p className="font-serif text-charcoal/30 leading-none uppercase" style={{ fontSize: 'clamp(1.4rem, 3vw, 2.8rem)' }}>
@@ -91,7 +91,7 @@ export default function GiftCardSection() {
             <div ref={cardRef} className="flex-shrink-0 will-change-transform" style={{ perspective: '800px' }}>
               <div
                 className="w-72 h-44 rounded-sm relative overflow-hidden"
-                style={{ background: 'linear-gradient(135deg, #1a1916 0%, #2d2a24 50%, #1a1916 100%)' }}
+                style={{ background: 'linear-gradient(135deg, #424135 0%, #524f40 50%, #424135 100%)' }}
               >
                 <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 30% 50%, #c49060 0%, transparent 60%)' }}></div>
                 <div className="absolute top-5 left-6">
