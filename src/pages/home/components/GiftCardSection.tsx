@@ -1,8 +1,10 @@
 import { useRef, useLayoutEffect } from 'react';
 import { gsap } from '../../../lib/gsap';
 import AnimatedFrame from '../../../components/feature/AnimatedFrame';
+import { useAnimReady } from '../../../context/AnimReadyContext';
 
 export default function GiftCardSection() {
+  const ready = useAnimReady();
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descRef = useRef<HTMLParagraphElement>(null);
@@ -11,6 +13,7 @@ export default function GiftCardSection() {
   const cardRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
+    if (!ready) return;
     const ctx = gsap.context(() => {
       // Title big reveal
       gsap.set(titleRef.current, { clipPath: 'inset(0 0 100% 0)', y: 60 });
@@ -44,7 +47,7 @@ export default function GiftCardSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [ready]);
 
   return (
     <section ref={sectionRef} className="w-full bg-cream py-24 md:py-32 px-8 md:px-16">

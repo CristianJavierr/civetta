@@ -1,8 +1,10 @@
 import { useRef, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap } from '../../../lib/gsap';
+import { useAnimReady } from '../../../context/AnimReadyContext';
 
 export default function Footer() {
+  const ready = useAnimReady();
   const year = new Date().getFullYear();
   const footerRef = useRef<HTMLElement>(null);
   const bigTextRef = useRef<HTMLDivElement>(null);
@@ -10,6 +12,7 @@ export default function Footer() {
   const logoRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
+    if (!ready) return;
     const ctx = gsap.context(() => {
       // Grid columns stagger in
       const cols = gridRef.current?.querySelectorAll(':scope > div') ?? [];
@@ -37,7 +40,7 @@ export default function Footer() {
     }, footerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [ready]);
 
   return (
     <footer ref={footerRef} className="w-full bg-[#f7f2e8] border-t border-charcoal/10">

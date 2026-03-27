@@ -1,12 +1,14 @@
 import { useRef, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap, ScrollTrigger } from '../../../lib/gsap';
+import { useAnimReady } from '../../../context/AnimReadyContext';
 
 const HERO_BG = 'https://cdn.prod.website-files.com/68a25157e0edb92947ffe4a2/68ab6d83cbb46c5a59dea24b_Background%20Hero-min.avif';
 const STAR_ICON = 'https://cdn.prod.website-files.com/68a25157e0edb92947ffe4a2/68ab6f5c7f6ef175306f18bb_star-icon.png';
 const GOOGLE_ICON = 'https://cdn.prod.website-files.com/68a25157e0edb92947ffe4a2/68ab6f5c31e3e7b0a84252b6_google-icon.png';
 
 export default function HeroSection() {
+  const ready = useAnimReady();
   const sectionRef = useRef<HTMLElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const word1Ref = useRef<HTMLHeadingElement>(null);
@@ -17,6 +19,7 @@ export default function HeroSection() {
   const scrollHintRef = useRef<HTMLAnchorElement>(null);
 
   useLayoutEffect(() => {
+    if (!ready) return;
     const ctx = gsap.context(() => {
       // ── PAGE LOAD ENTRANCE ──
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
@@ -56,7 +59,7 @@ export default function HeroSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [ready]);
 
   return (
     <section ref={sectionRef} className="relative w-full min-h-screen flex flex-col justify-end overflow-hidden">

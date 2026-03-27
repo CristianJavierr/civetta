@@ -4,6 +4,7 @@ import { AppRoutes } from "./router";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
 import LoadingScreen from "./components/feature/LoadingScreen";
+import { AnimReadyContext } from "./context/AnimReadyContext";
 
 
 function App() {
@@ -11,10 +12,12 @@ function App() {
 
   return (
     <I18nextProvider i18n={i18n}>
-      {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
-      <BrowserRouter basename={__BASE_PATH__}>
-        <AppRoutes />
-      </BrowserRouter>
+      <AnimReadyContext.Provider value={!loading}>
+        {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
+        <BrowserRouter basename={__BASE_PATH__}>
+          <AppRoutes />
+        </BrowserRouter>
+      </AnimReadyContext.Provider>
     </I18nextProvider>
   );
 }

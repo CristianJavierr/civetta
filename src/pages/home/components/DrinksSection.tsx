@@ -2,6 +2,7 @@ import { useRef, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap, ScrollTrigger } from '../../../lib/gsap';
 import AnimatedFrame from '../../../components/feature/AnimatedFrame';
+import { useAnimReady } from '../../../context/AnimReadyContext';
 
 const COCKTAIL_1 = 'https://cdn.prod.website-files.com/68a25157e0edb92947ffe4a2/68ac50267055b2ef13a16065_cocktails-1.avif';
 const COCKTAIL_2 = 'https://cdn.prod.website-files.com/68a25157e0edb92947ffe4a2/68ac5027270c47ed176e5cd7_cocktails-2.avif';
@@ -16,6 +17,7 @@ const drinks = [
 ];
 
 export default function DrinksSection() {
+  const ready = useAnimReady();
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
@@ -28,6 +30,7 @@ export default function DrinksSection() {
   const img2Ref = useRef<HTMLImageElement>(null);
 
   useLayoutEffect(() => {
+    if (!ready) return;
     const ctx = gsap.context(() => {
       // Title
       gsap.set(titleRef.current, { clipPath: 'inset(0 0 100% 0)', y: 50 });
@@ -93,7 +96,7 @@ export default function DrinksSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [ready]);
 
   return (
     <section ref={sectionRef} className="w-full bg-warm-beige">

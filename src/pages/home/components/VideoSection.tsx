@@ -2,11 +2,13 @@ import { useRef, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap, ScrollTrigger } from '../../../lib/gsap';
 import AnimatedFrame from '../../../components/feature/AnimatedFrame';
+import { useAnimReady } from '../../../context/AnimReadyContext';
 
 const VIDEO_SRC = 'https://cdn.prod.website-files.com/68a25157e0edb92947ffe4a2%2F68ab88ee4daaf51c42a59660_Amrit%20Palace%20%281%29-transcode.mp4';
 const VIDEO_POSTER = 'https://cdn.prod.website-files.com/68a25157e0edb92947ffe4a2/69a5fe2eb039b97dd5da108d_amrit-poster.avif';
 
 export default function VideoSection() {
+  const ready = useAnimReady();
   const sectionRef = useRef<HTMLElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -15,6 +17,7 @@ export default function VideoSection() {
   const videoWrapRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
+    if (!ready) return;
     const ctx = gsap.context(() => {
       // Text block: slides from left
       gsap.set([titleRef.current, bodyRef.current, btnRef.current], { opacity: 0, x: -50 });
@@ -62,7 +65,7 @@ export default function VideoSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [ready]);
 
   return (
     <section ref={sectionRef} className="bg-charcoal w-full">

@@ -2,6 +2,7 @@ import { useRef, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap, ScrollTrigger } from '../../../lib/gsap';
 import AnimatedFrame from '../../../components/feature/AnimatedFrame';
+import { useAnimReady } from '../../../context/AnimReadyContext';
 
 const MENU_ICON = 'https://cdn.prod.website-files.com/68a25157e0edb92947ffe4a2/68ab6aad6d37e1980d319ac9_menu-icon.png';
 const FEATURED_IMG = 'https://cdn.prod.website-files.com/68a25157e0edb92947ffe4a2/68ac4c4fc4648b01d408500b_Featured%20Menu.avif';
@@ -18,6 +19,7 @@ const menuItems = [
 ];
 
 export default function FeaturedMenuSection() {
+  const ready = useAnimReady();
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const itemsRef = useRef<HTMLDivElement>(null);
@@ -28,6 +30,7 @@ export default function FeaturedMenuSection() {
   const imageRef = useRef<HTMLImageElement>(null);
 
   useLayoutEffect(() => {
+    if (!ready) return;
     const ctx = gsap.context(() => {
       // Left title clip-path reveal
       gsap.set(titleRef.current, { clipPath: 'inset(0 0 100% 0)', y: 40 });
@@ -83,7 +86,7 @@ export default function FeaturedMenuSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [ready]);
 
   return (
     <section ref={sectionRef} className="w-full bg-cream">

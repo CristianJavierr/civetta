@@ -1,5 +1,6 @@
 import { useRef, useLayoutEffect } from 'react';
 import { gsap, ScrollTrigger } from '../../../lib/gsap';
+import { useAnimReady } from '../../../context/AnimReadyContext';
 
 const STAR_ICON = 'https://cdn.prod.website-files.com/68a25157e0edb92947ffe4a2/68ab6f5c7f6ef175306f18bb_star-icon.png';
 const GOOGLE_ICON = 'https://cdn.prod.website-files.com/68a25157e0edb92947ffe4a2/68ab6f5c31e3e7b0a84252b6_google-icon.png';
@@ -45,6 +46,7 @@ function ReviewCard({ review }: { review: (typeof reviews)[0] }) {
 }
 
 export default function TestimonialsSection() {
+  const ready = useAnimReady();
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const ratingNumRef = useRef<HTMLSpanElement>(null);
@@ -53,6 +55,7 @@ export default function TestimonialsSection() {
   const row2Ref = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
+    if (!ready) return;
     const ctx = gsap.context(() => {
       // ── Title reveal ──────────────────────────────────────────
       gsap.set(titleRef.current, { clipPath: 'inset(0 0 100% 0)', y: 50 });
@@ -141,7 +144,7 @@ export default function TestimonialsSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [ready]);
 
   return (
     <section ref={sectionRef} className="w-full bg-cream-light py-20 md:py-28 overflow-hidden">

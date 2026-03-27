@@ -1,6 +1,7 @@
 import { useRef, useLayoutEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap, ScrollTrigger } from '../../../lib/gsap';
+import { useAnimReady } from '../../../context/AnimReadyContext';
 
 const CAT_IMG_1 = 'https://cdn.prod.website-files.com/68a25157e0edb92947ffe4a2/68e46be43526b08d9492bd44_img-1.avif';
 const CAT_IMG_2 = 'https://cdn.prod.website-files.com/68a25157e0edb92947ffe4a2/68e46be3bdd582aff715479c_img-2.avif';
@@ -13,6 +14,7 @@ const slides = [
 ];
 
 export default function CateringSection() {
+  const ready = useAnimReady();
   const [current, setCurrent] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
   const title1Ref = useRef<HTMLHeadingElement>(null);
@@ -24,6 +26,7 @@ export default function CateringSection() {
   const next = () => setCurrent((c) => (c + 1) % slides.length);
 
   useLayoutEffect(() => {
+    if (!ready) return;
     const ctx = gsap.context(() => {
       // Title 1: clip-path + x from left (scrub for dramatic effect)
       gsap.set(title1Ref.current, { clipPath: 'inset(0 100% 0 0)', x: -60 });
@@ -80,7 +83,7 @@ export default function CateringSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [ready]);
 
   return (
     <section ref={sectionRef} className="w-full bg-cream-light py-20 md:py-28">

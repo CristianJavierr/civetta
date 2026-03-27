@@ -18,8 +18,6 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const pathFillRef = useRef<SVGPathElement>(null);
   const taglineRef = useRef<HTMLParagraphElement>(null);
   const percentRef = useRef<HTMLSpanElement>(null);
-  const panel1Ref = useRef<HTMLDivElement>(null);
-  const panel2Ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -40,7 +38,6 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
     gsap.set(svgWrapRef.current, { opacity: 0, scale: 0.9 });
     gsap.set(taglineRef.current, { opacity: 0, y: 10 });
     gsap.set(percentRef.current, { opacity: 0 });
-    gsap.set([panel1Ref.current, panel2Ref.current], { yPercent: 100 });
 
     const counter = { val: 0 };
     const tl = gsap.timeline();
@@ -90,24 +87,17 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       // 5) Contenido se desvanece
       .to(
         [svgWrapRef.current, taglineRef.current, percentRef.current],
-        { opacity: 0, duration: 0.3, ease: "power2.in" },
+        { opacity: 0, duration: 0.35, ease: "power2.in" },
         "+=0.3"
       )
 
-      // 6) Panel 1 (charcoal) sube primero
-      .to(panel1Ref.current, {
-        yPercent: 0,
-        duration: 0.85,
-        ease: "expo.inOut",
-      }, "-=0.05")
-
-      // 7) Panel 2 (cream) sube detrás, ligeramente solapado
-      .to(panel2Ref.current, {
-        yPercent: 0,
-        duration: 0.85,
+      // 6) El loading screen completo sube revelando el hero debajo
+      .to(containerRef.current, {
+        yPercent: -100,
+        duration: 1.1,
         ease: "expo.inOut",
         onComplete: () => { if (!cancelled) onComplete(); },
-      }, "-=0.55");
+      }, "+=0.05");
 
     return () => {
       cancelled = true;
@@ -165,19 +155,6 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         </div>
       </div>
 
-      {/* Panel 1 — charcoal, sube primero */}
-      <div
-        ref={panel1Ref}
-        className="fixed inset-0 z-[10000] bg-[#424135]"
-        style={{ willChange: "transform" }}
-      />
-
-      {/* Panel 2 — cream, sube detrás — cubre la pantalla con el color de fondo */}
-      <div
-        ref={panel2Ref}
-        className="fixed inset-0 z-[10001] bg-[#f2ece0]"
-        style={{ willChange: "transform" }}
-      />
     </div>
   );
 }

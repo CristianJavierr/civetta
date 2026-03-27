@@ -1,9 +1,11 @@
 import { useRef, useLayoutEffect } from 'react';
 import { gsap, ScrollTrigger } from '../../../lib/gsap';
+import { useAnimReady } from '../../../context/AnimReadyContext';
 
 const FULLSIZE_BG = 'https://cdn.prod.website-files.com/68a25157e0edb92947ffe4a2/68ac5358491181ca69dbe1f5_fullsize-min.avif';
 
 export default function FullsizeSection() {
+  const ready = useAnimReady();
   const sectionRef = useRef<HTMLElement>(null);
   const bgImgRef = useRef<HTMLImageElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -19,6 +21,7 @@ export default function FullsizeSection() {
   const textRef = useRef<HTMLParagraphElement>(null);
 
   useLayoutEffect(() => {
+    if (!ready) return;
     const ctx = gsap.context(() => {
       // ── BG IMAGE PARALLAX ZOOM (scrub) ──
       // Image starts zoomed in, releases as scroll progresses
@@ -136,7 +139,7 @@ export default function FullsizeSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [ready]);
 
   return (
     <section ref={sectionRef} className="relative w-full min-h-[600px] md:min-h-[700px] flex flex-col items-start justify-center overflow-hidden">
