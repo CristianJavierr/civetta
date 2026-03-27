@@ -42,7 +42,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
     const counter = { val: 0 };
     const tl = gsap.timeline();
 
-    // 1) SVG aparece
+    // 1) SVG aparece — en paralelo arranca el stroke para ganar tiempo
     tl.to(svgWrapRef.current, {
       opacity: 1,
       scale: 1,
@@ -50,11 +50,11 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       ease: "power2.out",
     })
 
-      // 2) Outline se dibuja
+      // 2) Outline se dibuja (empieza junto al fade del SVG)
       .to(
         pathOutline,
-        { strokeDashoffset: 0, duration: 2.8, ease: "power2.out" },
-        "+=0.05"
+        { strokeDashoffset: 0, duration: 4.2, ease: "power1.inOut" },
+        "<"
       )
 
       // 2b) Contador 0→100 sincronizado con el outline
@@ -62,8 +62,8 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         counter,
         {
           val: 100,
-          duration: 2.8,
-          ease: "power2.out",
+          duration: 4.2,
+          ease: "power1.inOut",
           onStart: () => gsap.set(percentRef.current, { opacity: 1 }),
           onUpdate: () => {
             if (percentRef.current) {
@@ -74,21 +74,21 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         "<"
       )
 
-      // 3) Tagline aparece a mitad del dibujo
+      // 3) Tagline aparece cuando el stroke lleva ~60%
       .to(
         taglineRef.current,
         { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
-        "-=1.8"
+        "<+=2.4"
       )
 
       // 4) Fill aparece al terminar el outline
-      .to(pathFill, { opacity: 1, duration: 0.55, ease: "power1.inOut" }, "+=0.02")
+      .to(pathFill, { opacity: 1, duration: 0.45, ease: "power1.inOut" }, "+=0.02")
 
       // 5) Contenido se desvanece
       .to(
         [svgWrapRef.current, taglineRef.current, percentRef.current],
-        { opacity: 0, duration: 0.35, ease: "power2.in" },
-        "+=0.3"
+        { opacity: 0, duration: 0.3, ease: "power2.in" },
+        "+=0.2"
       )
 
       // 6) El loading screen completo sube revelando el hero debajo
