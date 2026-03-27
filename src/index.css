@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+html {
+  /* scroll-behavior managed by Lenis */
+}
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background-color: #f2ece0;
+  color: #1a1916;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f2ece0;
+  overflow-x: hidden;
+}
+
+/* Marquee container */
+.marquee-wrapper {
+  overflow: hidden;
+  width: 100%;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+}
+
+/* Custom scrollbar - vertical only */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 0px;
+}
+::-webkit-scrollbar-track {
+  background: #f2ece0;
+}
+::-webkit-scrollbar-thumb {
+  background: #c49060;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
